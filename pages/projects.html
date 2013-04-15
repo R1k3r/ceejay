@@ -227,7 +227,7 @@
      	
 		<div id="preview-pane">
 			<div class="preview-container">
-				<img src="../A416716.jpg" class="jcrop-preview" alt="Preview" />
+				<img src="../A416716.jpg" id="preview" class="jcrop-preview" alt="Preview" />
 			</div>
 		</div>
 		</div>
@@ -356,12 +356,10 @@
     
     <script type="text/javascript">
     jQuery(function($){
-
         // Create variables (in this scope) to hold the API and image size
         var jcrop_api,
             boundx,
             boundy,
-
             // Grab some information about the preview pane
             $preview = $('#preview-pane'),
             $pcnt = $('#preview-pane .preview-container'),
@@ -369,23 +367,26 @@
 
             xsize = $pcnt.width(),
             ysize = $pcnt.height();
-        
-        console.log('init',[xsize,ysize]);
-        $('#target').Jcrop({
-          onChange: updatePreview,
-          onSelect: updatePreview,
-          aspectRatio: xsize / ysize
-        },function(){
-          // Use the API to get the real image size
-          var bounds = this.getBounds();
-          boundx = bounds[0];
-          boundy = bounds[1];
-          // Store the API in the jcrop_api variable
-          jcrop_api = this;
+		function iniJcrop() {
 
-          // Move the preview into the jcrop container for css positioning
-          $preview.appendTo(jcrop_api.ui.holder);
-        });
+	        
+	        console.log('init',[xsize,ysize]);
+	        $('#target').Jcrop({
+	          onChange: updatePreview,
+	          onSelect: updatePreview,
+	          aspectRatio: xsize / ysize
+	        },function(){
+	          // Use the API to get the real image size
+	          var bounds = this.getBounds();
+	          boundx = bounds[0];
+	          boundy = bounds[1];
+	          // Store the API in the jcrop_api variable
+	          jcrop_api = this;
+	
+	          // Move the preview into the jcrop container for css positioning
+	          $preview.appendTo(jcrop_api.ui.holder);
+	        });
+		}
 
         function updatePreview(c)
         {
@@ -403,9 +404,12 @@
           }
         };
         
+        $('#fileupload').bind('fileuploaddone', function(e, data) {
+        	$('#target').attr("src","../php/files/"+data.files[0].name);
+        	$('#preview').attr("src","../php/files/"+data.files[0].name);
+        	iniJcrop();
+        });
 
-      });
-   	 $(function() {
         // run the currently selected effect
         function runEffect() {
      
