@@ -220,15 +220,18 @@
     </div>
     </div>
     
-    <div class="row-fluid">
-     <div class="span12 offset2">
-     	<div class="picCropper" id="secondStep" style="display:none;">
-     	<img src="../A416716.jpg" id="target" alt="[Jcrop Example]" />
+   	<div class="picCropper" id="secondStep" style="display:none;">
+	    <div class="row-fluid">
+    	 <div class="span4 offset1">
+     		<img src="../A416716.jpg" id="target" alt="[Jcrop Example]" />
+     	</div>
      	
 		<div id="preview-pane">
+     	<div class="span6">
 			<div class="preview-container">
 				<img src="../A416716.jpg" id="preview" class="jcrop-preview" alt="Preview" />
 			</div>
+		</div>
 		</div>
 		</div>
      </div>
@@ -367,9 +370,16 @@
 
             xsize = $pcnt.width(),
             ysize = $pcnt.height();
+            
 		function iniJcrop() {
+            // Grab some information about the preview pane
+            var $preview = $('#preview-pane'),
+            $pcnt = $('#preview-pane .preview-container'),
+            $pimg = $('#preview-pane .preview-container img'),
 
-	        
+            xsize = $pcnt.width(),
+            ysize = $pcnt.height();
+			
 	        console.log('init',[xsize,ysize]);
 	        $('#target').Jcrop({
 	          onChange: updatePreview,
@@ -405,9 +415,8 @@
         };
         
         $('#fileupload').bind('fileuploaddone', function(e, data) {
-        	$('#target').attr("src","../php/files/"+data.files[0].name);
-        	$('#preview').attr("src","../php/files/"+data.files[0].name);
-        	iniJcrop();
+        	$('#target').load(function () {iniJcrop();}).attr("src","../php/files/"+data.files[0].name);
+        	$('#preview').load(function () {iniJcrop();}).attr("src","../php/files/"+data.files[0].name);
         });
 
         // run the currently selected effect

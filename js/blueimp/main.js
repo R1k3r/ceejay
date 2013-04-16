@@ -68,8 +68,27 @@ $(function () {
             });
         }
     } else {
+    	 $('#fileupload').fileupload('option', {
+             maxFileSize: 5000000,
+             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+             process: [
+                 {
+                     action: 'load',
+                     fileTypes: /^image\/(gif|jpeg|png)$/,
+                     maxFileSize: 20000000 // 20MB
+                 },
+                 {
+                     action: 'resize',
+                     maxWidth: 700,
+                     maxHeight: 500
+                 },
+                 {
+                     action: 'save'
+                 }
+             ]
+         });
         // Load existing files:
-        $('#fileupload').addClass('fileupload-processing');
+      /*  $('#fileupload').addClass('fileupload-processing');
         $.ajax({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
@@ -81,7 +100,7 @@ $(function () {
         }).done(function (result) {
             $(this).fileupload('option', 'done')
                 .call(this, null, {result: result});
-        });
+        });*/
     }
 
 });
