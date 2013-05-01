@@ -158,8 +158,31 @@
       </div>
      
      <div class="content">
+     <div class="optionUploadSelect">
+     <div class="row">
+     <div class="span12 offset2">
+     	<p>Do you want to upload an own picture or do you want to select a picture?</p>
+     </div>
+     <div class="span3 offset3">
+     	<button class="btn btn-large btn-block" type="button" id="uploadPic">Upload</button>
+     	<button class="btn btn-large btn-block" type="button" id="selectPic">Select</button>
+     </div>
+     </div>
+     </div>
+     
+     <div class="contentUpload" style="display:none;">
      
      <div class="row-fluid">
+     <div class="span12">
+     	<div class="row-fluid">
+     	<div class="span6 offset4">
+     		<p>Step <span id="progrCount">1</span> of 3: <span id="progrText">start with a picture upload.</span></p>
+     	</div>
+     	</div>
+     	<div class="progress">
+  			<div class="bar" id="progrBar" style="width: 10%;"></div>
+		</div>
+     </div>
      <div class="span12">
      <div id="firstStep">	
      <form id="fileupload" action="../php/index.php" method="POST" enctype="multipart/form-data">
@@ -237,7 +260,7 @@
      </div>
      </div>
      </div>
-     
+     </div>
       <div class="footer">
         <p>&copy; Company 2013</p>
       </div>
@@ -420,7 +443,7 @@
         });
 
         // run the currently selected effect
-        function runEffect() {
+        function runEffect(hide, show) {
      
           // most effect types need no options passed by default
           var options = {};
@@ -428,9 +451,9 @@
             options = { percent: 0 };
      
           // run the effect
-          $( "#firstStep" ).toggle( "scale", options, 500 , function () {
+          $(hide).toggle( "scale", options, 500 , function () {
         	  options = { to: { width: 100, height: 200 } }; 
-              $("#secondStep").toggle( "fold", options, 500 );
+              $(show).toggle( "fold", options, 500 );
           })
          
           
@@ -438,9 +461,17 @@
      
         // set effect from select menu value
         $( "#nxtButton" ).click(function() {
-          runEffect();
+          runEffect("#firstStep", "#secondStep");
+          $('#progrBar').attr("style","width: 50%");
+          $('#progrCount').text('2');
+          $('#progrText').text('crop your image to fit your desired size.');
           return false;
         });
+        
+        $('#uploadPic').click(function() {
+        	runEffect(".optionUploadSelect", ".contentUpload");
+        });
+        
       });
     </script>
 	</body>
