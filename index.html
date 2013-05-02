@@ -9,6 +9,15 @@
 
     <!-- Le styles -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="css/fv.css" type="text/css" /> -->
+    <!--[if IE]>
+	<style>
+		.item .tooltip .content{ display:none; opacity:1; }
+		.item .tooltip:hover .content{ display:block; }
+	</style>
+	<![endif]-->
+    
+    
     <style type="text/css">
       body {
         padding-top: 20px;
@@ -111,6 +120,7 @@
                 <li><a href="#">Downloads</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
+                <li><a href="#" id="reg">Register</a></li>
               </ul>
             </div>
           </div>
@@ -128,6 +138,9 @@
 
       <!-- Example row of columns -->
       <div class="row-fluid">
+      	<div id="regHolder" class="modal">
+      		
+      	</div>
         <div class="span4">
           <h2>Heading</h2>
           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
@@ -158,6 +171,14 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script>
+    	jQuery(function($){
+    		var that = this;
+    		$('#reg').click(function() {
+    			$("#regHolder").load('pages/register.html');
+    		});
+    	});
+	</script>
 
   </body>
 </html>
